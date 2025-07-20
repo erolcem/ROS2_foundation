@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  ros2_dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: ros2_dev
+    image: ros2_foundation:latest
+    network_mode: host
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.docker.xauth
+    volumes:
+      - .:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - ~/.ssh:/home/ros/.ssh:ro
+    working_dir: /workspace
+    command: /bin/bash
+    privileged: true
+    devices:
+      - /dev/dri:/dev/dri
+    restart: unless-stopped
+
+  simulation:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: ros2_sim
+    image: ros2_foundation:latest
+    network_mode: host
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.docker.xauth
+    volumes:
+      - .:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+    working_dir: /workspace
+    command: bash -c "source install/setup.bash && ros2 launch foundation_simulation simulation.launch.py"
+    privileged: true
+    devices:
+      - /dev/dri:/dev/dri
+    depends_on:
+      - ros2_dev
+    profiles:
+      - simulation

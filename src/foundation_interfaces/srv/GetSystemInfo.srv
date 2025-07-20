@@ -1,0 +1,8 @@
+# Get system information service
+---
+string robot_id
+string[] available_components
+string ros_version
+string system_version
+float64 uptime
+RobotStatus current_status

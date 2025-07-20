@@ -1,0 +1,12 @@
+# Move to position action
+geometry_msgs/Pose target_pose
+string frame_id
+float64 max_velocity
+float64 max_acceleration
+---
+geometry_msgs/Pose final_pose
+float64 execution_time
+---
+geometry_msgs/Pose current_pose
+float64 distance_remaining
+float64 progress_percentage

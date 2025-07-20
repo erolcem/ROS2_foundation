@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="foundation_world">
+    
+    <!-- Physics settings -->
+    <physics name="default_physics" default="0" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    
+    <!-- Scene settings -->
+    <scene>
+      <grid>true</grid>
+      <origin_visual>true</origin_visual>
+    </scene>
+    
+    <!-- Lighting -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <!-- Ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    
+    <!-- Add some objects for testing -->
+    <model name="box1">
+      <pose>2 0 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.7 0.7 0.7 1</diffuse>
+            <specular>0 0 0 1</specular>
+          </material>
+        </visual>
+        <inertial>
+          <mass>10</mass>
+          <inertia>
+            <ixx>1.67</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.67</iyy>
+            <iyz>0</iyz>
+            <izz>1.67</izz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+    
+    <model name="cylinder1">
+      <pose>-2 2 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.5 0 0 1</ambient>
+            <diffuse>0.7 0 0 1</diffuse>
+            <specular>0 0 0 1</specular>
+          </material>
+        </visual>
+        <inertial>
+          <mass>5</mass>
+          <inertia>
+            <ixx>1.08</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1.08</iyy>
+            <iyz>0</iyz>
+            <izz>0.625</izz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+    
+  </world>
+</sdf>

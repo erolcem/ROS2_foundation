@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="foundation_robot">
+
+  <!-- Include common macros -->
+  <xacro:include filename="$(find foundation_description)/urdf/common_macros.xacro"/>
+
+  <!-- Robot parameters -->
+  <xacro:property name="base_width" value="0.4"/>
+  <xacro:property name="base_length" value="0.6"/>
+  <xacro:property name="base_height" value="0.2"/>
+  <xacro:property name="wheel_radius" value="0.1"/>
+  <xacro:property name="wheel_width" value="0.05"/>
+
+  <!-- Base link (root of the robot) -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.2 0.2 0.8 1.0"/>
+      </material>
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}"/>
+      </geometry>
+    </collision>
+    
+    <inertial>
+      <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+      <mass value="20.0"/>
+      <inertia ixx="0.6" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.4"/>
+    </inertial>
+  </link>
+
+  <!-- Footprint link (projection on ground) -->
+  <link name="base_footprint"/>
+  
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Wheels -->
+  <xacro:wheel prefix="left_front" 
+               parent="base_link" 
+               x_offset="${base_length/2 - 0.1}" 
+               y_offset="${base_width/2 + wheel_width/2}"/>
+               
+  <xacro:wheel prefix="right_front" 
+               parent="base_link" 
+               x_offset="${base_length/2 - 0.1}" 
+               y_offset="${-base_width/2 - wheel_width/2}"/>
+               
+  <xacro:wheel prefix="left_rear" 
+               parent="base_link" 
+               x_offset="${-base_length/2 + 0.1}" 
+               y_offset="${base_width/2 + wheel_width/2}"/>
+               
+  <xacro:wheel prefix="right_rear" 
+               parent="base_link" 
+               x_offset="${-base_length/2 + 0.1}" 
+               y_offset="${-base_width/2 - wheel_width/2}"/>
+
+  <!-- Sensor mount points -->
+  <link name="sensor_mount">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0.1 0.1 0.1 1.0"/>
+      </material>
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </collision>
+    
+    <inertial>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <joint name="sensor_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="sensor_mount"/>
+    <origin xyz="${base_length/2} 0 ${base_height}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Manipulator mount points -->
+  <link name="manipulator_mount">
+    <visual>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.05"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1.0"/>
+      </material>
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.05"/>
+      </geometry>
+    </collision>
+    
+    <inertial>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <joint name="manipulator_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="manipulator_mount"/>
+    <origin xyz="0 0 ${base_height}" rpy="0 0 0"/>
+  </joint>
+
+</robot>

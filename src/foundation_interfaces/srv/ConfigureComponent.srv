@@ -1,0 +1,7 @@
+# Configure component service
+string component_name
+string configuration_yaml
+---
+bool success
+string message
+ComponentStatus component_status

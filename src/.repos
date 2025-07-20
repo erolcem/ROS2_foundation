@@ -1,0 +1,18 @@
+repositories:
+  # Foundation packages are in src/ already
+  
+  # Additional useful packages (optional)
+  # navigation2:
+  #   type: git
+  #   url: https://github.com/ros-planning/navigation2.git
+  #   version: humble
+  
+  # moveit2:
+  #   type: git
+  #   url: https://github.com/ros-planning/moveit2.git
+  #   version: humble
+  
+  # ros2_control:
+  #   type: git
+  #   url: https://github.com/ros-controls/ros2_control.git
+  #   version: humble

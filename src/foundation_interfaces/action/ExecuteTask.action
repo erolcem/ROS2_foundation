@@ -1,0 +1,11 @@
+# Execute task action
+string task_name
+string[] parameters
+---
+bool success
+string result_message
+string[] output_data
+---
+string current_step
+float64 progress_percentage
+string status_message

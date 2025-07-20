@@ -1,0 +1,65 @@
+# Build artifacts
+build/
+install/
+log/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv
+
+# C++
+*.o
+*.so
+*.a
+*.exe
+compile_commands.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+
+# Logs
+*.log
+
+# ROS
+*.bag
+*.db3
+
+# Testing
+coverage.xml
+.coverage
+test_results/
+.pytest_cache/
+
+# Documentation build
+docs/_build/
+docs/build/
+
+# Package artifacts
+*.deb
+*.rpm
+
+# Simulation artifacts
+.gazebo/
