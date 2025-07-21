@@ -1,11 +1,13 @@
 FROM osrf/ros:humble-desktop-full
 
+FROM osrf/ros:humble-desktop-full
+
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=humble
 ENV WORKSPACE=/workspace
 
-# Install additional packages
+# Install essential packages
 RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-colcon-common-extensions \
@@ -13,30 +15,18 @@ RUN apt-get update && apt-get install -y \
     python3-vcstool \
     git \
     vim \
-    wget \
-    curl \
     build-essential \
     cmake \
-    gdb \
-    libeigen3-dev \
-    libgtest-dev \
-    libgazebo11-dev \
-    gazebo11 \
-    ros-humble-gazebo-ros-pkgs \
-    ros-humble-navigation2 \
-    ros-humble-nav2-bringup \
-    ros-humble-robot-localization \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install basic ROS packages (only ones we know exist)
+RUN apt-get update && apt-get install -y \
     ros-humble-joint-state-publisher \
     ros-humble-joint-state-publisher-gui \
     ros-humble-xacro \
     ros-humble-robot-state-publisher \
     ros-humble-tf2-tools \
-    ros-humble-moveit \
-    ros-humble-control-msgs \
-    ros-humble-controller-manager \
-    ros-humble-hardware-interface \
-    ros-humble-realtime-tools \
-    ros-humble-rqt* \
+    ros-humble-rqt-common-plugins \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user

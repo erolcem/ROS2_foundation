@@ -4,30 +4,105 @@ A comprehensive, Docker-based ROS2 foundation that serves as a starting point fo
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Docker and Docker Compose
+Choose your preferred setup method:
+
+### Option A: Docker Setup (Recommended)
+
+**Prerequisites:**
+- Docker and Docker Compose installed
 - Git
 
-### Getting Started
+**Step 1: Clone the repository**
 ```bash
-# Clone the repository
-git clone <your-repo-url>
-cd ros2-robotics-foundation
+git clone https://github.com/erolcem/ROS2_foundation.git
+cd ROS2_foundation
+```
 
-# Build and start the development environment
+**Step 2: Setup X11 forwarding for GUI (Linux)**
+```bash
+# Allow Docker to access display
+xhost +local:docker
+
+# Create X11 auth file for Docker
+touch /tmp/.docker.xauth
+xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f /tmp/.docker.xauth nmerge -
+```
+
+**Step 3: Build and start the development environment**
+```bash
+# Build the Docker image and start container
 docker-compose up -d
 
-# Access the container
+# Check if container is running
+docker ps
+```
+
+**Step 4: Access the container and build**
+```bash
+# Enter the development container
 docker exec -it ros2_dev bash
 
-# Build the workspace
-colcon build
+# Inside container: Run the setup script
+./setup.sh
 
-# Source the workspace
-source install/setup.bash
+# Or build manually:
+# colcon build --symlink-install
+# source install/setup.bash
+```
 
-# Run example launch file
+**Step 5: Test the system**
+```bash
+# Inside container: Launch the basic system
 ros2 launch foundation_bringup basic_system.launch.py
+```
+
+### Option B: Native Installation (Alternative)
+
+**Prerequisites:**
+- Ubuntu 22.04 LTS
+- ROS2 Humble Desktop Full
+
+**Step 1: Install ROS2 Humble (if not installed)**
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install ROS2 Humble Desktop Full
+sudo apt install ros-humble-desktop-full
+
+# Install build tools
+sudo apt install python3-colcon-common-extensions python3-rosdep
+```
+
+**Step 2: Clone and build**
+```bash
+# Clone repository
+git clone https://github.com/erolcem/ROS2_foundation.git
+cd ROS2_foundation
+
+# Run setup script
+./setup.sh
+
+# Or build manually:
+# source /opt/ros/humble/setup.bash
+# rosdep install --from-paths src --ignore-src -r -y
+# colcon build --symlink-install
+# source install/setup.bash
+```
+
+### 🔧 Troubleshooting Docker
+
+If Docker build fails with GPG errors:
+
+```bash
+# Clean Docker cache
+docker system prune -a
+
+# Rebuild with no cache
+docker-compose build --no-cache
+
+# Alternative: Use pre-built image
+docker pull osrf/ros:humble-desktop-full
 ```
 
 ## 🏗️ Architecture

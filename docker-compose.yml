@@ -11,14 +11,10 @@ services:
     stdin_open: true
     tty: true
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY:-:0}
       - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=/tmp/.docker.xauth
     volumes:
       - .:/workspace
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
-      - ~/.ssh:/home/ros/.ssh:ro
     working_dir: /workspace
     command: /bin/bash
     privileged: true
